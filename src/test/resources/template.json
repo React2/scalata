@@ -1,0 +1,59 @@
+{
+    "parser": "MongoParser",
+    "exporter": {
+        "name": "FileExporter",
+        "output": "club-data.js"
+    },
+    "data_structure": {
+        "type": "{{root}}",
+        "repeat": "100",
+        "fields": [
+            {
+                "type": "{{id}}",
+                "name": "_id"
+            },
+            {
+                "type": "{{boolean}}",
+                "name": "isBot",
+                "generator": {
+                    "name": "{{default}}",
+                    "appear_value": "false",
+                    "appear_chance": "85"
+                }
+            },
+            {
+                "type": "{{object}}",
+                "name": "club",
+                "fields": [
+                    {
+                        "type": "{{string}}",
+                        "name": "name",
+                        "generator": {
+                            "name": "{{random}}",
+                            "min_len": 4,
+                            "max_len": 15
+                        }
+                    },
+                    {
+                        "type": "{{number}}",
+                        "name": "skillLevel",
+                        "generator": {
+                            "name": "{{int}}",
+                            "min_val": 4,
+                            "max_val": 15
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "{{date}}",
+                "name": "createdAt",
+                "generator": {
+                    "name": "{{iso-date}}",
+                    "start_at": "2014-01-01 17:22:08.000Z",
+                    "end_at": "2016-01-01 17:22:08.000Z"
+                }
+            }
+        ]
+    }
+}

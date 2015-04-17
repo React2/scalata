@@ -15,7 +15,8 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "com.typesafe"  % "config"         % "1.2.1",
-  "org.scalatest" % "scalatest_2.11" % "2.2.1"  % "test"
+  "org.tsers.zeison" %% "zeison"         % "0.6.0",
+  "com.typesafe"      % "config"         % "1.2.1",
+  "org.scalatest"     % "scalatest_2.11" % "2.2.1"  % "test"
 )
 
