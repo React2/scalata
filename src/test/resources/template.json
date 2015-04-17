@@ -5,7 +5,6 @@
         "output": "club-data.js"
     },
     "data_structure": {
-        "type": "{{root}}",
         "repeat": "100",
         "fields": [
             {

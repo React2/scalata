@@ -8,7 +8,14 @@ import org.tsers.zeison.Zeison.JValue
  */
 class DataSpecification(val json: JValue) {
 
-  def root: Root = ???
+  lazy val root = {
+    val struct = json("data_structure")
+    val repeat = struct.repeat.toInt
+    val fields = struct.fields.toList
+    Root(repeat, Field(fields))
+  }
+
+
 
 }
 

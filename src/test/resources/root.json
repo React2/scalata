@@ -1,0 +1,32 @@
+{
+    "repeat": "10",
+    "fields": [
+        {
+            "type": "{{string}}",
+            "name": "name",
+            "generator": {
+                "name": "{{random}}",
+                "min_len": 4,
+                "max_len": 15
+            }
+        },
+        {
+            "type": "{{number}}",
+            "name": "age"
+        },
+        {
+            "type": "{{object}}",
+            "name": "address",
+            "fields": [
+                {
+                    "type": "{{string}}",
+                    "name": "street"
+                },
+                {
+                    "type": "{{number}}",
+                    "name": "number"
+                }
+            ]
+        }
+    ]
+}

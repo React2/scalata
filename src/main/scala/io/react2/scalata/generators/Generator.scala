@@ -1,15 +1,23 @@
 package io.react2.scalata.generators
 
+import io.react2.scalata.data.Field
+import org.tsers.zeison.Zeison.JValue
+
 import scala.util.Random
 
 /**
  * @author dbalduini
  */
-trait Generator[+T] {
+trait Generator[T <: Field, +U] {
+  def one: U
+  def stream: Stream[U]
+  def many(n: Int): List[U]
+}
 
-  protected[generators] val rand = Random
+object Generator {
 
-  def one: T
+  def apply(fieldType: String, json: JValue) = {
 
-  def many(n: Int): List[T]
+  }
+
 }
