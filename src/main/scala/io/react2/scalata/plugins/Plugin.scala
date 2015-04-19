@@ -6,3 +6,10 @@ package io.react2.scalata.plugins
 trait Plugin {
 
 }
+
+trait ParserPlugin extends Plugin
+
+trait ExporterPlugin extends Plugin
+
+
+//TODO VER COMO O DO PLAY EH FEITO
