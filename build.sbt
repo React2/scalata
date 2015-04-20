@@ -11,12 +11,14 @@ resolvers ++= Seq(
   "Typesafe Releases"  at "http://repo.typesafe.com/typesafe/releases/",
   "Typesafe Snapshots" at "http://repo.typesafe.com/typesafe/snapshots/",
   "Sonatype Releases"  at "https://oss.sonatype.org/content/repositories/releases/",
-  "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
+  "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/",
+  "Scalaz Releases"    at "https://dl.bintray.com/scalaz/releases"
 )
 
 libraryDependencies ++= Seq(
-  "org.tsers.zeison" %% "zeison"         % "0.6.0",
-  "com.typesafe"      % "config"         % "1.2.1",
-  "org.scalatest"     % "scalatest_2.11" % "2.2.1"  % "test"
+  "org.tsers.zeison"  %% "zeison"         % "0.6.0",
+  "org.scalaz.stream" %% "scalaz-stream"  % "0.7",
+  "com.typesafe"      %  "config"         % "1.2.1",
+  "org.scalatest"     %  "scalatest_2.11" % "2.2.1"  % "test"
 )
 

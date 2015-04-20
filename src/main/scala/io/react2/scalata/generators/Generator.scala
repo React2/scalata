@@ -1,8 +1,6 @@
 package io.react2.scalata.generators
 
 /**
- * Generator is a Monad.
- *
  * @author dbalduini
  */
 trait Generator[+U] {
@@ -66,12 +64,12 @@ object Generator {
    * @return the chosen value in the range
    */
   def choose(lo: Int, hi: Int): Generator[Int] = new Generator[Int] {
-    override def one: Int = Math.floor(Math.random * (hi - lo + 1) + lo).toInt
+    def one = Math.floor(Math.random * (hi - lo + 1) + lo).toInt
   }
 
   /**
    * Pick one value of the given elements
-   * @param xs the values
+   * @param xs the values to pick from
    * @return the chosen value
    */
   def pick[T](xs: T*): Generator[T] = for (i <- choose(0, xs.length - 1)) yield xs(i)
