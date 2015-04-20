@@ -1,5 +1,6 @@
 package io.react2.scalata
 
+import io.react2.scalata.translation.Translator
 import scodec.bits.ByteVector
 
 import scalaz.stream._
@@ -9,8 +10,6 @@ import scalaz.concurrent.Task
  * @author dbalduini
  */
 object Main extends App {
-
-  val definition = "data/template.json"
 
   type MEUTIPO = String
 
@@ -28,7 +27,22 @@ object Main extends App {
       .to(export)
       .run
 
-  // at the end of the universe...
-  val u: Unit = generator.run
+  def main() = {
+
+    val home = Option(System.getenv("SCALATA_HOME")) orElse Some("data/template.json")
+    require(home.isDefined)
+
+    val file = new java.io.File("")
+    require(file.exists)
+
+    val json = scala.io.Source.fromFile(file).mkString
+    val definition = Translator(json)
+
+
+    // at the end of the universe...
+    val u: Unit = generator.run
+  }
+
+
 
 }

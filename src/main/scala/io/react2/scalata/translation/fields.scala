@@ -1,8 +1,10 @@
-package io.react2.scalata.data
+package io.react2.scalata.translation
 
 import io.react2.scalata.exceptions._
-import io.react2.scalata.generators.Generator
+import io.react2.scalata.generators._
 import org.tsers.zeison.Zeison.JValue
+
+import scalaz.Alpha
 
 /**
  * @author dbalduini
@@ -14,11 +16,12 @@ object Field {
     def parse(j: JValue): Field = {
       val name = j.get[String]("name")
       val `type` = j.get[String]("type")
-      val gen = Generator(`type`, j.generator)
       val fields = j.fields.toOption.map(_.toList).getOrElse(Nil)
       `type` match {
         case "{{object}}" => ObjField(name, parseFields(fields))
-        case "{{string}}" => StringField(name)
+        case "{{string}}" =>
+          val gen = j.getOrElse[StringGen]("generator", StringGen.alphabetic)
+          StringField(name, gen)
         case "{{date}}" => DateField(name)
         case "{{number}}" => NumberField(name)
         case "{{boolean}}" => BooleanField(name)
@@ -32,22 +35,19 @@ object Field {
 
 }
 
-case class Root(repeat: Int, fields: List[Field])
-
 sealed abstract class Field {
   def name: String
 }
 
+trait HasGen[+T] {
+  def gen: Generator[T]
+}
+
 case class ObjField(name: String, elems: List[Field]) extends Field
-
-case class StringField(name: String) extends Field
-
+case class StringField(name: String, gen: Generator[String]) extends Field with HasGen[String]
 case class DateField(name: String) extends Field
-
 case class NumberField(name: String) extends Field
-
 case class BooleanField(name: String) extends Field
-
 case class IdField[T](name: String) extends Field
 
 case object NullField extends Field {

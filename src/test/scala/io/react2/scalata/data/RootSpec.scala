@@ -1,5 +1,6 @@
 package io.react2.scalata.data
 
+import io.react2.scalata.translation.{DataStructure, Translator}
 import org.scalatest._
 
 /**
@@ -9,11 +10,11 @@ class RootSpec extends FlatSpec with Matchers {
 
   val json = scala.io.Source.fromURL(getClass.getResource("/template.json")).mkString
 
-  var root: Root = null
+  var root: DataStructure = null
 
   "RootSpec" should "not be null" in {
-    val spec = DataSpecification(json)
-    root = spec.root
+    val spec = Translator(json)
+    root = spec.buildDataStructure
     root should not be null
   }
 

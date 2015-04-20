@@ -1,7 +1,7 @@
 package io.react2.scalata.parsers
 
 import io.react2.scalata.Key
-import io.react2.scalata.data.Field
+import io.react2.scalata.translation.Field
 
 /**
  * @author dbalduini

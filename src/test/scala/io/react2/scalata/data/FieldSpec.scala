@@ -1,5 +1,6 @@
 package io.react2.scalata.data
 
+import io.react2.scalata.translation._
 import org.scalatest._
 import org.tsers.zeison.Zeison
 

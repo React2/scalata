@@ -5,9 +5,18 @@
             "type": "{{string}}",
             "name": "name",
             "generator": {
-                "name": "{{random}}",
+                "name": "{{unicode}}",
                 "min_len": 4,
                 "max_len": 15
+            }
+        },
+        {
+            "type": "{{string}}",
+            "name": "name",
+            "generator": {
+                "name": "{{alphabetic}}",
+                "min_len": 1,
+                "max_len": 10
             }
         },
         {
