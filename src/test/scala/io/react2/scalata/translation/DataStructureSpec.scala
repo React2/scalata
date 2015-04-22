@@ -1,4 +1,4 @@
-package io.react2.scalata.data
+package io.react2.scalata.translation
 
 import org.scalatest._
 

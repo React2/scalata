@@ -1,7 +1,5 @@
 package io.react2.scalata.generators
 
-import io.react2.scalata.translation.{ObjField, Root}
-
 /**
  * @author dbalduini
  */

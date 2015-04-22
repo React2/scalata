@@ -1,6 +1,5 @@
-package io.react2.scalata.data
+package io.react2.scalata.translation
 
-import io.react2.scalata.translation.{DataStructure, Translator}
 import org.scalatest._
 
 /**
