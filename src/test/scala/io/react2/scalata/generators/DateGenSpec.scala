@@ -8,6 +8,8 @@ import org.scalatest._
  */
 class DateGenSpec extends FlatSpec with Matchers with CustomMatcher {
 
+  import io.react2.scalata.translation._
+
   val randGen = new RandomDateGen(1900, 2015)
   val isoGen = new ISODateGen(1900, 2015)
 

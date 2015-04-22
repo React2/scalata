@@ -1,6 +1,6 @@
 package io.react2.scalata.translation
 
-import io.react2.scalata.exceptions.{InvalidGenType, InvalidFieldType}
+import io.react2.scalata.exceptions.InvalidGenType
 import io.react2.scalata.generators._
 import org.tsers.zeison.Zeison
 import org.tsers.zeison.Zeison.JValue
@@ -32,10 +32,10 @@ class Translator(val json: JValue) {
           // Get the generator
           val generator: Generator[Field] = `type` match {
             case "{{object}}" =>
-              val repeat = field.repeat.toInt
+              val repeat = field.getOrElse[Int]("repeat", 1)
               val fields = field.fields.toOption.map(_.toList).getOrElse(Nil)
               val root = Root(name, repeat, parseFields(fields))
-              Gen.root(root)
+              new ObjFieldGen(root)
             case "{{string}}" => new UnicodeGen(4,15)
             case "{{date}}" => new RandomDateGen(1900, 2015)
             case "{{int-32}}" => Gen.integers

@@ -26,13 +26,8 @@ object DescriptionFormat {
       override def read(key: String) = _.apply(key).toStr
     }
 
-    implicit object StringGenReader extends Reader[StringGen] {
-      override def read(key: String) = json => {
-        val generator = json.apply(key)
-        val min = generator("min").toOption
-//        Gen.buildStringGen()
-        ???
-      }
+    implicit object IntReader extends Reader[Int] {
+      override def read(key: String) = _.apply(key).toInt
     }
   }
 

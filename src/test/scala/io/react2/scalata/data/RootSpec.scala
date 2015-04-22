@@ -8,20 +8,20 @@ import org.scalatest._
  */
 class RootSpec extends FlatSpec with Matchers {
 
-  val json = scala.io.Source.fromURL(getClass.getResource("/template.json")).mkString
+//  val json = scala.io.Source.fromURL(getClass.getResource("/template.json")).mkString
+//
+//  var root: DataStructure = null
+//
+//  "RootSpec" should "not be null" in {
+//    val spec = Translator(json)
+//    root = spec.buildDataStructure
+//    root should not be null
+//  }
 
-  var root: DataStructure = null
-
-  "RootSpec" should "not be null" in {
-    val spec = Translator(json)
-    root = spec.buildDataStructure
-    root should not be null
-  }
-
-  it should "have 4 fields" in {
-    root.fields.size shouldBe 4
-    root.repeat shouldBe 100
-  }
+//  it should "have 4 fields" in {
+//    root.fields.size shouldBe 4
+//    root.repeat shouldBe 100
+//  }
 
 }
 

@@ -1,12 +1,17 @@
 package io.react2.scalata.translation
 
+import scala.annotation.tailrec
+
 /**
  * @author dbalduini
  */
 sealed abstract class Field
 
 // Containers
-case class ObjField(bindings: Map[String, Field]) extends Field
+case class ObjField(bindings: Map[String, Field]) extends Field {
+  def +(b: (String, Field)) = ObjField(bindings + b)
+  def -(k: String) = ObjField(bindings - k)
+}
 case class SeqField(elems: List[ObjField]) extends Field
 
 // Values
@@ -23,6 +28,7 @@ case class FloatField(value: Float) extends Field
 
 
 object Field {
+
   def prettyPrint(field: Field): String = field match {
     case SeqField(elems) => "[" + (elems map prettyPrint mkString ", ") + "]"
     case ObjField(bindings) =>
@@ -36,4 +42,23 @@ object Field {
     case DateField(v) => v.toString
     case NullField => "null"
   }
+
+//  val exptected = ObjField(Map(
+//    "timestamp" -> LongField(1234),
+//    "birthday" -> DateField(new Date()),
+//    "club" -> ObjField(
+//        Map(
+//        "name" -> StringField("XABLAU"),
+//        "age" -> IntField(26)
+//        )
+//    )))
+
+//  @tailrec
+  def parse(x: DataStructure): (String, Field) = x match {
+    case Root(name, repeat, gens) =>
+      val fields = gens.map(parse)
+      name ->  ObjField(fields.toMap)
+    case FieldGen(name, gen) => name -> gen.one
+  }
+
 }

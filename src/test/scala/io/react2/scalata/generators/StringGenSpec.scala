@@ -1,12 +1,15 @@
 package io.react2.scalata.generators
 
 import io.react2.scalata.test.CustomMatcher
+import io.react2.scalata.translation.StringField
 import org.scalatest._
 
 /**
  * @author dbalduini
  */
 class StringGenSpec extends FlatSpec with Matchers with CustomMatcher {
+
+
 
   implicit val gen = new UnicodeGen(4, 15)
 
@@ -16,11 +19,11 @@ class StringGenSpec extends FlatSpec with Matchers with CustomMatcher {
   }
 
   it should "random generate strings that starts with LowerCase A" in {
-    expectValue[String](_.startsWith("A"), 1000)
+    expectValue[StringField](_.value.startsWith("A"), 1000)
   }
 
   it should "random generate strings that starts with UpperCase A" in {
-    expectValue[String](_.startsWith("B"), 1000)
+    expectValue[StringField](_.value.startsWith("B"), 1000)
   }
 
 }
