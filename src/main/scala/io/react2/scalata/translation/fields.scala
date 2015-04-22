@@ -1,56 +1,39 @@
 package io.react2.scalata.translation
 
-import io.react2.scalata.exceptions._
-import io.react2.scalata.generators._
-import org.tsers.zeison.Zeison.JValue
-
-import scalaz.Alpha
-
 /**
  * @author dbalduini
  */
+sealed abstract class Field
+
+// Containers
+case class ObjField(bindings: Map[String, Field]) extends Field
+case class SeqField(elems: List[ObjField]) extends Field
+
+// Values
+case class StringField(value: String) extends Field
+case class DateField(value: java.util.Date) extends Field
+case class BooleanField(value: Boolean) extends Field
+case object NullField extends Field
+
+// Numeric Fields
+case class IntField(value: Int) extends Field
+case class LongField(value: Long) extends Field
+case class DoubleField(value: Double) extends Field
+case class FloatField(value: Float) extends Field
+
+
 object Field {
-  def apply(fields: List[JValue]) = parseFields(fields)
-
-  def parseFields(fields: List[JValue]): List[Field] = {
-    def parse(j: JValue): Field = {
-      val name = j.get[String]("name")
-      val `type` = j.get[String]("type")
-      val fields = j.fields.toOption.map(_.toList).getOrElse(Nil)
-      `type` match {
-        case "{{object}}" => ObjField(name, parseFields(fields))
-        case "{{string}}" =>
-          val gen = j.getOrElse[StringGen]("generator", StringGen.alphabetic)
-          StringField(name, gen)
-        case "{{date}}" => DateField(name)
-        case "{{number}}" => NumberField(name)
-        case "{{boolean}}" => BooleanField(name)
-        case "{{id}}" => IdField(name)
-        case "{{null}}" => NullField
-        case other => throw new InvalidFieldType(other)
+  def prettyPrint(field: Field): String = field match {
+    case SeqField(elems) => "[" + (elems map prettyPrint mkString ", ") + "]"
+    case ObjField(bindings) =>
+      val assocs = bindings map {
+        case (key, value) => "\"" + key + "\": " + prettyPrint(value)
       }
-    }
-    fields map parse
+      "{" + (assocs mkString ", ") + "}"
+    case StringField(v) => "\"" + v + "\""
+    case LongField(v) => v.toString
+    case IntField(v) => v.toString
+    case DateField(v) => v.toString
+    case NullField => "null"
   }
-
 }
-
-sealed abstract class Field {
-  def name: String
-}
-
-trait HasGen[+T] {
-  def gen: Generator[T]
-}
-
-case class ObjField(name: String, elems: List[Field]) extends Field
-case class StringField(name: String, gen: Generator[String]) extends Field with HasGen[String]
-case class DateField(name: String) extends Field
-case class NumberField(name: String) extends Field
-case class BooleanField(name: String) extends Field
-case class IdField[T](name: String) extends Field
-
-case object NullField extends Field {
-  override val name: String = throw new NoSuchElementException("name of null field")
-}
-

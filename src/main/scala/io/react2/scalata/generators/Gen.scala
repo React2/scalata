@@ -1,5 +1,7 @@
 package io.react2.scalata.generators
 
+import io.react2.scalata.translation.{ObjField, Root}
+
 /**
  * @author dbalduini
  */
@@ -37,5 +39,12 @@ object Gen {
    * @return the chosen value
    */
   def pick[T](xs: T*): Generator[T] = for (i <- choose(0, xs.length - 1)) yield xs(i)
+
+  def root(r: Root): Generator[ObjField] = new Generator[ObjField] {
+    override def one: ObjField = {
+      val bindings = r.fields.map(_.generate)
+      ObjField(bindings.toMap)
+    }
+  }
 
 }

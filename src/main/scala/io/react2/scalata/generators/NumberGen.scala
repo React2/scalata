@@ -5,4 +5,3 @@ package io.react2.scalata.generators
  */
 sealed abstract class NumberGen[+T] extends Generator[T]
 
-

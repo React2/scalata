@@ -1,37 +1,33 @@
 package io.react2.scalata.data
 
+import java.util.Date
+
 import io.react2.scalata.translation._
 import org.scalatest._
-import org.tsers.zeison.Zeison
 
 /**
  * @author dbalduini
  */
-class FieldSpec extends FlatSpec with Matchers{
+class FieldSpec extends FlatSpec with Matchers {
 
-  val json = scala.io.Source.fromURL(getClass.getResource("/root.json")).mkString
+  //  val json = scala.io.Source.fromURL(getClass.getResource("/root.json")).mkString
+  //
+  //  var fields: List[Field] = Nil
 
-  var fields: List[Field] = Nil
+  "FieldSpec" should "pretty print the fields" in {
+    val myObject = ObjField(Map(
+      "timestamp" -> LongField(1234),
+      "birthday" -> DateField(new Date()),
+      "club" -> ObjField(Map(
+        "name" -> StringField("XABLAU"),
+        "age" -> IntField(26))
+      )))
 
-  "FieldSpec" should "parse a list of json values" in {
-    val jv = Zeison.parse(json)
-    fields = Field(jv.fields.toList)
-    fields.isEmpty shouldBe false
+    val expected = """{"timestamp": 1234, "birthday": Wed Apr 22 16:14:30 BRT 2015, "club": {"name": "XABLAU", "age": 26}}"""
+    val result = Field.prettyPrint(myObject)
+    expected === result
   }
 
-  it should "have 3 fields" in {
-    fields.size shouldBe 3
-  }
-
-  it should "return a list of fields in the correct order" in {
-    val expected = List(
-      StringField("name"),
-      NumberField("age"),
-      ObjField("address",
-        List(StringField("street"), NumberField("number")))
-    )
-    fields === expected
-  }
 
 }
 

@@ -44,10 +44,3 @@ trait Generator[+U] {
   }
 
 }
-
-object Generator {
-  def buildStringGen(kind: String, min: Int, max: Int): StringGen = kind match {
-    case "{{unicode}}" => new UnicodeGen(min, max)
-    case "{{alphabetic}}" => new AlphabeticGen(min, max)
-  }
-}

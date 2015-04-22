@@ -4,5 +4,6 @@ package io.react2.scalata.generators
  * @author dbalduini
  */
 class CharGen(charset: Vector[Char]) extends Generator[Char] {
-  override def one: Char = Gen.pick(charset:_*).one
+  private val picker = Gen.pick(charset:_*)
+  override def one: Char = picker.one
 }

@@ -7,3 +7,5 @@ case class MissingPropertyException(name: String) extends Exception(s"The requir
 
 case class InvalidFieldType(name: String) extends Exception(s"Invalid field type $name")
 
+case class InvalidGenType(name: String) extends Exception(s"Invalid gen type")
+

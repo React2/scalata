@@ -6,7 +6,7 @@ import org.scalatest._
 /**
  * @author dbalduini
  */
-class UnicodeGenSpec extends FlatSpec with Matchers with CustomMatcher {
+class StringGenSpec extends FlatSpec with Matchers with CustomMatcher {
 
   implicit val gen = new UnicodeGen(4, 15)
 

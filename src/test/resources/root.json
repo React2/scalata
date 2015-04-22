@@ -2,37 +2,29 @@
     "repeat": "10",
     "fields": [
         {
-            "type": "{{string}}",
+            "type": "{{unicode}}",
             "name": "name",
-            "generator": {
-                "name": "{{unicode}}",
-                "min_len": 4,
-                "max_len": 15
-            }
+            "min_len": 4,
+            "max_len": 15
         },
         {
-            "type": "{{string}}",
-            "name": "name",
-            "generator": {
-                "name": "{{alphabetic}}",
-                "min_len": 1,
-                "max_len": 10
-            }
-        },
-        {
-            "type": "{{number}}",
-            "name": "age"
+            "type": "{{isodate}}",
+            "name": "birthday",
+            "min_year": 1900,
+            "max_year": 2015
         },
         {
             "type": "{{object}}",
             "name": "address",
             "fields": [
                 {
-                    "type": "{{string}}",
-                    "name": "street"
+                    "type": "{{alphabetic}}",
+                    "name": "street",
+                    "min_len": 1,
+                    "max_len": 10
                 },
                 {
-                    "type": "{{number}}",
+                    "type": "{{integer}}",
                     "name": "number"
                 }
             ]
