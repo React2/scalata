@@ -69,6 +69,18 @@ ex:
 --parser=your.project.path.XmlParser --exporter=your.project.path.OracleExporter
 ```
 
+```scala
+trait Parser[-A, +B] {
+  def parse(a: A): B
+}
+```
+
+```scala
+trait Exporter {
+  def export(f: Any): Unit
+}
+```
+
 # Run
 ```
 ./scalata.sh --definition=data/template.json --parser=your.project.path.XmlParser
