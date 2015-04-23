@@ -1,11 +1,9 @@
 package io.react2.scalata.exporters
 
-import io.react2.scalata.translation.Field
-
 /**
  * @author dbalduini
  */
-class ConsoleExporter extends Exporter[Field] {
-  override def export(u: Field): Unit = println(Field.prettyPrint(u))
+class ConsoleExporter extends Exporter {
+  override def export(u: String): Unit = println(u)
 }
 

@@ -1,21 +1,11 @@
 package io.react2.scalata
 
-import io.react2.scalata.translation.{DataStructure, Translator}
-import scodec.bits.ByteVector
-
-import scalaz.stream._
-import scalaz.concurrent.Task
+import io.react2.scalata.translation.Translator
 
 /**
  * @author dbalduini
  */
 object Main extends App {
-
-
-
-//  def toByteVector: ProcessAnyPO, ByteVector] = ???
-
-//  def export: Sink[Task, ByteVector] = io.fileChunkW("data/output.txt"un
 
   def main() = {
 
@@ -28,27 +18,9 @@ object Main extends App {
     val json = scala.io.Source.fromFile(file).mkString
     val trans = Translator(json)
 
-    // Generate Pipelinere
-    val generate = trans.buildGenerator
-    // Parse Pipeline
-    val parse = trans.buildParser
-    // Export Pipeline
-    val export = trans.buildExporter
-
-    //TODO ASSIM FICA MELHOR EU ACHO
-//    trans.generator.run
-
-
-//    val generator: Task[Unit] =
-//      generate
-//        .pipe(parse)
-//        .to(export)
-//        .runs)
-
     // at the end of the universe...
-//    val u: Unit = generator.run
+    trans.converter.run
   }
-
 
   // Run the program
   main()

@@ -1,8 +1,9 @@
 {
-    "parser": "MongoParser",
+    "parser": {
+        "name": "MongoParser"
+    },
     "exporter": {
-        "name": "FileExporter",
-        "output": "club-data.js"
+        "name": "ConsoleExporter"
     },
     "data_structure": {
         "repeat": 100,

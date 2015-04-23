@@ -18,8 +18,8 @@ class UnicodeGen(min: Int, max: Int, charset: Vector[Char]) extends StringGen(mi
 }
 
 class AlphabeticGen(min: Int, max: Int, alphabet: Seq[String]) extends StringGen(min, max) {
-  private val picker = Gen.pick(alphabet:_*)
   def this(min: Int, max: Int) = this(min, max, LATIN_ALPHABET)
+  private val picker = Gen.pick(alphabet:_*)
   override def one: StringField = (min to nextLen).foldLeft("")((t, a) => t + picker.one)
 }
 

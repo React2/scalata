@@ -1,20 +1,19 @@
 package io.react2.scalata.translation
 
 import io.react2.scalata.exceptions.InvalidGenType
+import io.react2.scalata.exporters.{ConsoleExporter, Exporter}
 import io.react2.scalata.generators._
+import io.react2.scalata.parsers.MongoParser
 import org.tsers.zeison.Zeison
 import org.tsers.zeison.Zeison.JValue
 
-import scalaz.stream._
 import scalaz.concurrent.Task
+import scalaz.stream._
 
 /**
  * @author dbalduini
  */
 class Translator(val json: JValue) {
-
-  type Data = Map[String, Any]
-
 
   def buildDataStructure = {
 
@@ -36,7 +35,7 @@ class Translator(val json: JValue) {
               val fields = field.fields.toOption.map(_.toList).getOrElse(Nil)
               val root = Root(name, repeat, parseFields(fields))
               new ObjFieldGen(root)
-            case "{{string}}" => new UnicodeGen(4,15)
+            case "{{string}}" => new UnicodeGen(4, 15)
             case "{{date}}" => new RandomDateGen(1900, 2015)
             case "{{int-32}}" => Gen.integers
             case "{{int-64}}" => Gen.longs
@@ -60,18 +59,20 @@ class Translator(val json: JValue) {
     dataStructure(root)
   }
 
+  val buf = new collection.mutable.ArrayBuffer[String]
+  val snk: Sink[Task, String] = io.fillBuffer(buf)
 
-  def buildParser = {
-
+  def generator: Process[Task, Field] = {
+    val root = buildDataStructure.asInstanceOf[Root]
+    val gen = Gen.fieldGen(root)
+    Process.range(0, root.repeat).flatMap { i =>
+      Process.tell("Got input " + i) ++ Process.emitO(gen.one)
+    }.toSource.observeW(snk).stripW
   }
 
-  def buildExporter = {
+  def parser = new MongoParser
 
-  }
-
-  def buildGenerator: Process[Task, Data] = {
-    ???
-  }
+  def converter: Task[Unit] = generator.map(parser.parse).to[Task](Exporter.export(new ConsoleExporter)).run
 
 }
 

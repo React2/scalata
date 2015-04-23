@@ -1,5 +1,9 @@
 package io.react2.scalata.generators
 
+import io.react2.scalata.translation._
+
+import scala.annotation.tailrec
+
 /**
  * @author dbalduini
  */
@@ -37,5 +41,25 @@ object Gen {
    * @return the chosen value
    */
   def pick[T](xs: T*): Generator[T] = for (i <- choose(0, xs.length - 1)) yield xs(i)
+
+
+  /**
+   * Field generator
+   * @param root The root data structure
+   * @return the field generator
+   */
+  def fieldGen(root: DataStructure): Generator[ObjField] = {
+    @tailrec
+    def recursiveBuild(fields: List[FieldGen], acc: Map[String,Field]): Map[String, Field] = fields match {
+      case head :: tail => recursiveBuild(tail, acc + head.generate)
+      case Nil => acc
+    }
+    new Generator[ObjField] {
+      override def one: ObjField = root match {
+        case Root(name, repeat, gens) => ObjField(recursiveBuild(gens, Map()))
+        case FieldGen(name, gen) => ObjField(Map(name -> gen.one))
+      }
+    }
+  }
 
 }

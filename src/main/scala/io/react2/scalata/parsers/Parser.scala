@@ -3,6 +3,7 @@ package parsers
 
 import io.react2.scalata.translation.Field
 
+
 /**
  * @author dbalduini
  */
