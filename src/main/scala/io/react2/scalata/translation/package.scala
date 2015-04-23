@@ -9,7 +9,8 @@ import org.tsers.zeison.Zeison.JValue
  */
 package object translation {
 
-  implicit def toRichJValue(j: JValue) = new RichJValue(j)
+  implicit def enrichJValue(j: JValue) = new RichJValue(j)
+
 
   class RichJValue(j: JValue) {
     def get[T](key: String)(implicit reader: Reader[T]): T = {
@@ -18,6 +19,7 @@ package object translation {
         case None => throw MissingPropertyException(key)
       }
     }
+
     def getOrElse[T](key: String, that: T)(implicit reader: Reader[T]): T = {
       j.apply(key).toOption match {
         case Some(_) => reader.read(key)(j)
@@ -25,5 +27,6 @@ package object translation {
       }
     }
   }
+
 
 }

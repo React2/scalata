@@ -1,6 +1,18 @@
 # scalata
 Massive data generator for load tests.
 
+Scalata is a streamming data generator that has the following data __PIPELINE__:
+
+TRANSLATE -> GENERATE -> PARSE -> EXPORT
+
+
+## Benchmark
+
+* Parser = MongoParser
+* Exporter = ConsoleExporter
+
+1M objects ~ 2 minutes [TODO: Improve]
+
 ## Configuration
 
 The _template.json_ file is where you must configure the program.

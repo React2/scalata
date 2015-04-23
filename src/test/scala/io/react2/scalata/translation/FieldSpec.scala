@@ -34,7 +34,7 @@ class FieldSpec extends FlatSpec with Matchers {
         "age" -> IntField(26))
       )))
     val t = Translator(json)
-    val root = t.buildDataStructure
+    val root = t.buildRoot
     val result = Field.parse(root)
     result === expected
   }

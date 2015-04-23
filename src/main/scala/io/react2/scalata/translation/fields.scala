@@ -1,7 +1,5 @@
 package io.react2.scalata.translation
 
-import scala.annotation.tailrec
-
 /**
  * @author dbalduini
  */

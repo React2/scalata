@@ -17,7 +17,7 @@ class TranslatorSpec extends FlatSpec with Matchers {
 
   it should "build the data structure" in {
     val t = Translator(definition)
-    val ds = t.buildDataStructure
+    val ds = t.buildRoot
     println(ds)
     ds.name === "root"
   }
