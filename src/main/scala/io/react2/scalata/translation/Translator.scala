@@ -1,7 +1,7 @@
 package io.react2.scalata.translation
 
 import io.react2.scalata.exceptions.InvalidGenType
-import io.react2.scalata.exporters.FileExporter
+import io.react2.scalata.exporters.{ConsoleExporter, FileExporter}
 import io.react2.scalata.generators._
 import io.react2.scalata.parsers.MongoParser
 import org.tsers.zeison.Zeison
@@ -49,7 +49,10 @@ class Translator(val json: JValue) {
 
   def buildParser = new MongoParser
 
-  def buildExporter = new FileExporter("output.txt")
+  def buildExporter = {
+//    new FileExporter("output.txt")
+    new ConsoleExporter
+  }
 
   def translate = (buildRoot, buildParser, buildExporter)
 

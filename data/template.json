@@ -1,11 +1,10 @@
 {
     "parser": "MongoParser",
     "exporter": {
-        "name": "FileExporter",
-        "output": "club-data.js"
+        "name": "ConsoleExporter"
     },
     "data_structure": {
-        "repeat": 1001,
+        "repeat": 1000000,
         "fields": [
             {
                 "type": "{{int-64}}",

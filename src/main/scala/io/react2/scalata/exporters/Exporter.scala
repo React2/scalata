@@ -13,7 +13,9 @@ trait Exporter {
   def before(): Unit = {}
   def after(): Unit = {}
 
-  private def output = Exporter.exporterSink[Any](this)(_ export _)
+  // Export stream
+  private def closeResources = Process.eval_(Task.delay(this.close()))
+  private def output = Exporter.exporterSink[Any](this)(_ export _).onComplete(closeResources)
   def sink(p: Process[Task, Any]): Process[Task, Unit] = p.intersperse(",\n").to(output)
 
 }
