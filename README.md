@@ -5,7 +5,7 @@ Scalata is a streamming data generator that has the following data __PIPELINE__:
 
 TRANSLATE -> GENERATE -> PARSE -> EXPORT
 
-The pipeline is created with scalaz-streams, and the generated data is streammed to the output.
+The pipeline is created with [scalaz-stream](https://github.com/scalaz/scalaz-stream), and the generated data is streammed to the output.
 
 ```scala
 // Data Generation Pipeline
@@ -14,13 +14,6 @@ def pipeline: Task[Unit] = root |> generator |>> parser |>> exporter
 // at the end of the universe...
 pipeline.run
 ```
-
-## Benchmark
-
-* Parser = MongoParser
-* Exporter = ConsoleExporter
-
-1M objects ~ 2 minutes [TODO: Improve]
 
 ## Configuration
 
@@ -155,3 +148,10 @@ trait Exporter {
 ```
 ./scalata.sh --definition=data/template.json --parser=your.project.path.XmlParser
 ```
+
+## Benchmark
+
+* Parser = MongoParser
+* Exporter = ConsoleExporter
+
+1M objects ~ 2 minutes [TODO: Improve]
