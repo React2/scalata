@@ -22,6 +22,9 @@ object DescriptionFormat {
     implicit object IntReader extends Reader[Int] {
       override def parse(j: JValue): Int = j.toInt
     }
+    implicit object LongReader extends Reader[Long] {
+      override def parse(j: JValue): Long = j.toLong
+    }
   }
 
 }

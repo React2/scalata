@@ -1,7 +1,7 @@
 package io.react2.scalata.generators
 
-import java.text.SimpleDateFormat
 import io.react2.scalata.translation.DateField
+import io.react2.scalata.utils.Format
 
 /**
  * @author dbalduini
@@ -9,13 +9,9 @@ import io.react2.scalata.translation.DateField
 sealed abstract class DateGen extends Generator[DateField]
 
 class ISODateGen(lo: Int, hi: Int) extends DateGen {
-  import java.util.TimeZone
 
   private val random = new RandomDateGen(lo, hi)
-
-  private val sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz") {
-    this.setTimeZone(TimeZone.getTimeZone("UTC"))
-  }
+  private val sdf = Format.ISO_DATE_FORMAT
 
   private def toISO8601(date: DateField) = sdf.parse(sdf.format(date.value))
 
@@ -24,6 +20,7 @@ class ISODateGen(lo: Int, hi: Int) extends DateGen {
 }
 
 class RandomDateGen(lo: Int, hi: Int) extends DateGen {
+
   import java.util.{Calendar, GregorianCalendar}
 
   private val gc = new GregorianCalendar()

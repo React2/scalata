@@ -31,9 +31,7 @@ object Gen {
    * @param hi the max value
    * @return the chosen value in the range
    */
-  def choose(lo: Int, hi: Int): Generator[Int] = new Generator[Int] {
-    def one = Math.floor(Math.random * (hi - lo + 1) + lo).toInt
-  }
+  def choose(lo: Int, hi: Int): Generator[Int] = new IntGen(lo, hi)
 
   /**
    * Pick one value of the given elements
@@ -41,7 +39,6 @@ object Gen {
    * @return the chosen value
    */
   def pick[T](xs: T*): Generator[T] = for (i <- choose(0, xs.length - 1)) yield xs(i)
-
 
   /**
    * Field generator
@@ -61,5 +58,7 @@ object Gen {
       }
     }
   }
+
+  def placeholder(k: String) = Gen(PlaceHolder(k))
 
 }

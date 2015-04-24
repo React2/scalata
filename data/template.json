@@ -3,32 +3,120 @@
         "name": "io.react2.scalata.parsers.MongoParser"
     },
     "exporter": {
-        "name": "io.react2.scalata.exporters.ConsoleExporter"
+        "name": "io.react2.scalata.exporters.FileExporter",
+        "output": "/tmp/insert_script.js"
     },
     "data_structure": {
-        "repeat": 3051,
+        "repeat": 1000000,
         "fields": [
             {
-                "type": "{{int-64}}",
-                "name": "timestamp"
-            },
-            {
-                "type": "{{date}}",
-                "name": "birthday"
+                "type": "<_id>",
+                "name": "_id"
             },
             {
                 "type": "{{object}}",
                 "name": "club",
                 "fields": [
                     {
-                        "type": "{{string}}",
-                        "name": "name"
+                        "type": "{{alphabetic}}",
+                        "name": "name",
+                        "trim": false
                     },
                     {
                         "type": "{{int-32}}",
-                        "name": "age"
+                        "name": "skillLevel",
+                        "min": 0,
+                        "max": 99999
+                    },
+                    {
+                        "type": "{{object}}",
+                        "name": "crowdToNextLevel",
+                        "fields": [
+                            {
+                                "type": "{{int-64}}",
+                                "name": "crowd",
+                                "min": 0,
+                                "max": 99999
+                            }
+                        ]
+                    },
+                    {
+                        "type": "{{object}}",
+                        "name": "xpToNextLevel",
+                        "fields": [
+                            {
+                                "type": "{{int-64}}",
+                                "name": "experience",
+                                "min": 0,
+                                "max": 99999
+                            }
+                        ]
+                    },
+                    {
+                        "type": "{{int-32}}",
+                        "name": "level",
+                        "min": 1,
+                        "max": 30
+                    },
+                    {
+                        "type": "{{object}}",
+                        "name": "xp",
+                        "fields": [
+                            {
+                                "type": "{{int-64}}",
+                                "name": "experience",
+                                "min": 0
+                            }
+                        ]
+                    },
+                    {
+                        "type": "{{object}}",
+                        "name": "coins",
+                        "fields": [
+                            {
+                                "type": "{{int-64}}",
+                                "name": "coin",
+                                "min": 0
+                            }
+                        ]
+                    },
+                    {
+                        "type": "{{object}}",
+                        "name": "goldenBall",
+                        "fields": [
+                            {
+                                "type": "{{int-64}}",
+                                "name": "goldenBall",
+                                "min": 0
+                            }
+                        ]
+                    },
+                    {
+                        "type": "{{object}}",
+                        "name": "crowd",
+                        "fields": [
+                            {
+                                "type": "{{int-64}}",
+                                "name": "crowd",
+                                "min": 0
+                            }
+                        ]
                     }
                 ]
+            },
+            {
+                "type": "{{boolean}}",
+                "name": "isBot"
+            },
+            {
+                "type": "{{int-32}}",
+                "name": "rand",
+                "min": 0,
+                "max": 10
+            },
+            {
+                "type": "{{date-iso}}",
+                "name": "createdAt"
             }
         ]
     }

@@ -18,6 +18,7 @@ case class StringField(value: String) extends Field
 case class DateField(value: java.util.Date) extends Field
 case class BooleanField(value: Boolean) extends Field
 case object NullField extends Field
+case class PlaceHolder(key: String) extends Field
 
 // Numeric Fields
 case class IntField(value: Int) extends Field
@@ -39,6 +40,7 @@ object Field {
     case LongField(v) => v.toString
     case IntField(v) => v.toString
     case DateField(v) => v.toString
+    case PlaceHolder(v) => "<" + v + ">"
     case NullField => "null"
   }
 

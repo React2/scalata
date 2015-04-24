@@ -30,14 +30,26 @@ class Translator(val json: JValue) {
               val fields = field.fields.toOption.map(_.toList).getOrElse(Nil)
               val root = Root(name, repeat, parseFields(fields))
               new ObjFieldGen(root)
-            case "{{string}}" => new UnicodeGen(4, 15)
-            case "{{date}}" => new RandomDateGen(1900, 2015)
-            case "{{int-32}}" => Gen.integers
-            case "{{int-64}}" => Gen.longs
+            case "{{unicode}}" =>
+              val escape: Set[Char] = field("escape").toSet[JValue].map(_.toStr.head)
+              new UnicodeGen(4, 15,escape)
+            case "{{alphabetic}}" =>
+              new AlphabeticGen(0, 10)
+            case "{{int-32}}" =>
+              val min = field.getOrElse[Int]("min", Int.MinValue)
+              val max = field.getOrElse[Int]("max", Int.MaxValue)
+              new IntGen(min, max)
+            case "{{int-64}}" =>
+              val min = field.getOrElse[Long]("min", Long.MinValue)
+              val max = field.getOrElse[Long]("max", Long.MaxValue)
+              new LongGen(min, max)
             case "{{float-32}}" => ???
             case "{{float-64}}" => ???
             case "{{boolean}}" => Gen.booleans
             case "{{null}}" => Gen(null)
+            case "{{date}}" => new RandomDateGen(1900, 2015)
+            case "{{date-iso}}" => new ISODateGen(1900, 2015)
+            case key@placeholder => Gen.placeholder(key)
             case other => throw new InvalidGenType(other)
           }
           FieldGen(name, generator)
@@ -62,6 +74,14 @@ class Translator(val json: JValue) {
     val args = exporter.toMap
     val name = args("name").as[String]
     Plugin.of[Exporter](name, args)
+  }
+
+  private object placeholder {
+    val pattern = """^<(.*)>$""".r
+    def unapply(s: String): Boolean = s match {
+      case pattern(key) => true
+      case _ => false
+    }
   }
 
 }

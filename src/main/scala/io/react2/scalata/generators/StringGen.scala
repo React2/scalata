@@ -11,9 +11,10 @@ sealed abstract class StringGen(min: Int, max: Int) extends Generator[StringFiel
   def nextLen = lengthGenerator.one
 }
 
-class UnicodeGen(min: Int, max: Int, charset: Vector[Char]) extends StringGen(min, max) {
-  def this(min: Int, max: Int) = this(min, max, BASIC_LATIN)
-  val charGenerator = new CharGen(charset)
+class UnicodeGen(min: Int, max: Int, charset: Vector[Char], escape: Set[Char]) extends StringGen(min, max) {
+  private val escaped = charset.filter(_ != '"')
+  def this(min: Int, max: Int, escape: Set[Char] = Set.empty) = this(min, max, BASIC_LATIN, escape)
+  val charGenerator = new CharGen(escaped.filterNot(c => escape.contains(c)))
   override def one: StringField = new String(charGenerator.many(nextLen))
 }
 

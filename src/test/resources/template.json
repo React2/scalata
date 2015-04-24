@@ -1,24 +1,24 @@
 {
-    "parser": "MongoParser",
+    "parser": {
+        "name": "io.react2.scalata.parsers.MongoParser"
+    },
     "exporter": {
-        "name": "FileExporter",
-        "output": "club-data.js"
+        "name": "io.react2.scalata.exporters.ConsoleExporter"
     },
     "data_structure": {
         "repeat": 100,
         "fields": [
             {
-                "type": "{{id}}",
+                "type": "<_id>",
                 "name": "_id"
             },
             {
-                "type": "{{boolean}}",
-                "name": "isBot",
-                "generator": {
-                    "name": "{{default}}",
-                    "appear_value": "false",
-                    "appear_chance": "85"
-                }
+                "type": "{{int-64}}",
+                "name": "timestamp"
+            },
+            {
+                "type": "{{isodate}}",
+                "name": "createdAt"
             },
             {
                 "type": "{{object}}",
@@ -26,32 +26,13 @@
                 "fields": [
                     {
                         "type": "{{string}}",
-                        "name": "name",
-                        "generator": {
-                            "name": "{{unicode}}",
-                            "min_len": 4,
-                            "max_len": 15
-                        }
+                        "name": "name"
                     },
                     {
-                        "type": "{{number}}",
-                        "name": "skillLevel",
-                        "generator": {
-                            "name": "{{int}}",
-                            "min_val": 4,
-                            "max_val": 15
-                        }
+                        "type": "{{int-32}}",
+                        "name": "age"
                     }
                 ]
-            },
-            {
-                "type": "{{date}}",
-                "name": "createdAt",
-                "generator": {
-                    "name": "{{iso-date}}",
-                    "start_at": "2014-01-01 17:22:08.000Z",
-                    "end_at": "2016-01-01 17:22:08.000Z"
-                }
             }
         ]
     }
