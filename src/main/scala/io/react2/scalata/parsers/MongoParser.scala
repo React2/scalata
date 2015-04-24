@@ -1,11 +1,12 @@
 package io.react2.scalata.parsers
 
 import io.react2.scalata.translation._
+import io.react2.scalata.plugins.Plugin
 
 /**
  * @author dbalduini
  */
-class MongoParser extends FieldParser[String] {
+class MongoParser(val args: Plugin.Args) extends Parser {
 
   override def parse(a: Field): String = a match {
     case SeqField(elems) => "[" + (elems map parse mkString ", ") + "]"

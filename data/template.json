@@ -1,10 +1,12 @@
 {
-    "parser": "MongoParser",
+    "parser": {
+        "name": "io.react2.scalata.parsers.MongoParser"
+    },
     "exporter": {
-        "name": "ConsoleExporter"
+        "name": "io.react2.scalata.exporters.ConsoleExporter"
     },
     "data_structure": {
-        "repeat": 1000000,
+        "repeat": 3051,
         "fields": [
             {
                 "type": "{{int-64}}",

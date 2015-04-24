@@ -1,14 +1,11 @@
-package io.react2.scalata
-package parsers
+package io.react2.scalata.parsers
 
+import io.react2.scalata.plugins.Plugin
 import io.react2.scalata.translation.Field
-
 
 /**
  * @author dbalduini
  */
-trait Parser[-A, +B] {
-  def parse(a: A): B
+trait Parser extends Plugin {
+  def parse(f: Field): Any
 }
-
-trait FieldParser[+U] extends Parser[Field, U]

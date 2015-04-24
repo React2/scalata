@@ -1,9 +1,10 @@
 package io.react2.scalata.translation
 
-import io.react2.scalata.exceptions.InvalidGenType
-import io.react2.scalata.exporters.{ConsoleExporter, FileExporter}
+import io.react2.scalata.exceptions._
+import io.react2.scalata.exporters._
 import io.react2.scalata.generators._
-import io.react2.scalata.parsers.MongoParser
+import io.react2.scalata.parsers._
+import io.react2.scalata.plugins.Plugin
 import org.tsers.zeison.Zeison
 import org.tsers.zeison.Zeison.JValue
 
@@ -12,7 +13,9 @@ import org.tsers.zeison.Zeison.JValue
  */
 class Translator(val json: JValue) {
 
-  def buildRoot = {
+  def translate = (buildRoot, buildParser, buildExporter)
+
+  lazy val buildRoot = {
     def getRoot(j: JValue): Root = {
       val repeat = j.repeat.toInt
       val fields = j.fields.toList
@@ -47,15 +50,19 @@ class Translator(val json: JValue) {
   }
 
 
-  def buildParser = new MongoParser
-
-  def buildExporter = {
-//    new FileExporter("output.txt")
-    new ConsoleExporter
+  lazy val buildParser: Parser = {
+    val parser = json.parser
+    val args = parser.toMap
+    val name = parser.get[String]("name")
+    Plugin.of[Parser](name, args)
   }
 
-  def translate = (buildRoot, buildParser, buildExporter)
-
+  lazy val buildExporter: Exporter = {
+    val exporter = json.exporter
+    val args = exporter.toMap
+    val name = args("name").as[String]
+    Plugin.of[Exporter](name, args)
+  }
 
 }
 

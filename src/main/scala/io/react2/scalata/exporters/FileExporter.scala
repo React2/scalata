@@ -3,11 +3,18 @@ package io.react2.scalata.exporters
 import java.io.{RandomAccessFile, File}
 import java.nio.ByteBuffer
 import java.nio.charset.Charset
+import io.react2.scalata.plugins.Plugin
+
+import scalaz.concurrent.Task
+import scalaz.stream.Process
 
 /**
  * @author dbalduini
  */
-class FileExporter(fileName: String, buffSize: Int = 2048) extends Exporter {
+class FileExporter(val args: Plugin.Args) extends Exporter {
+
+  val fileName = args("output", "data/data.out")
+  val buffSize = args("buffSize", 2048)
 
   val file = new File(fileName)
   require(!file.exists, fileName + " already exists")
@@ -45,10 +52,7 @@ class FileExporter(fileName: String, buffSize: Int = 2048) extends Exporter {
     channel.close()
   }
 
-  def reset(): Unit = {
-    counter = 0
-    channel.position(0)
-    buffer.clear()
-  }
+
+  override protected def intersperse(p: => Process[Task, Any]) = p.intersperse(",\n")
 
 }
