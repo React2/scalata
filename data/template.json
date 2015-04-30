@@ -4,7 +4,7 @@
     },
     "exporter": {
         "name": "io.react2.scalata.exporters.MongoExporter",
-        "verbose": true,
+        "verbose": false,
         "database": "futiba",
         "collection": "users"
     },

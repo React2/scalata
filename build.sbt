@@ -3,7 +3,7 @@ name := "scalata"
 
 organization := "io.react2"
 
-version := "0.0.1-SNAPSHOT"
+version := "1.0-SNAPSHOT"
 
 scalaVersion := "2.11.6"
 

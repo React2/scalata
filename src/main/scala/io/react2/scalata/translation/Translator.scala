@@ -1,5 +1,6 @@
 package io.react2.scalata.translation
 
+import io.react2.scalata.Context
 import io.react2.scalata.exporters._
 import io.react2.scalata.generators._
 import io.react2.scalata.parsers._
@@ -12,7 +13,17 @@ import org.tsers.zeison.Zeison.JValue
  */
 class Translator(val json: JValue) {
 
-  def translate = (buildRoot, buildParser, buildExporter)
+  def translate = {
+    val root = buildRoot
+
+    // Set context variables
+    Context.NUMBER_OF_LINES = Some(root.repeat)
+
+    // Translate pipeline members
+    val parser = buildParser
+    val exporter = buildExporter
+    (root, parser, exporter)
+  }
 
   lazy val buildRoot = {
     def getRoot(j: JValue): Root = {

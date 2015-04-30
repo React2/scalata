@@ -16,7 +16,6 @@ object Main extends App {
   def generateData(json: String) = {
 
     lazy val (root, parser, exporter) = Translator(json).translate
-
     println(root)
 
     def generator(root: Root): Process[Task, Field] = {
