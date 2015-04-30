@@ -12,19 +12,14 @@ package object translation {
 
   implicit class RichJValue(j: JValue) {
 
-    def get[T](key: String)(implicit reader: Reader[T]): T = {
-      j.apply(key).toOption match {
-        case Some(_) => reader.read(key)(j)
-        case None => throw MissingPropertyException(key)
-      }
-    }
+    def get[T](key: String)(implicit reader: Reader[T]): T =
+      maybe(key).getOrElse(throw MissingPropertyException(key))
 
-    def getOrElse[T](key: String, that: T)(implicit reader: Reader[T]): T = {
-      j.apply(key).toOption match {
-        case Some(_) => reader.read(key)(j)
-        case None => that
-      }
-    }
+    def getOrElse[T](key: String, that: T)(implicit reader: Reader[T]): T =
+      maybe(key) getOrElse that
+
+    def maybe[T](key: String)(implicit reader: Reader[T]): Option[T] =
+      j.apply(key).toOption.map(_ => reader.read(key)(j))
 
     def as[T](implicit reader: Reader[T]): T = reader.parse(j)
 

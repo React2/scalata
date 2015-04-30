@@ -3,11 +3,13 @@
         "name": "io.react2.scalata.parsers.MongoParser"
     },
     "exporter": {
-        "name": "io.react2.scalata.exporters.FileExporter",
-        "output": "/tmp/insert_script.js"
+        "name": "io.react2.scalata.exporters.MongoExporter",
+        "verbose": true,
+        "database": "futiba",
+        "collection": "users"
     },
     "data_structure": {
-        "repeat": 1000000,
+        "repeat": 10000,
         "fields": [
             {
                 "type": "<_id>",
@@ -20,7 +22,9 @@
                     {
                         "type": "{{alphabetic}}",
                         "name": "name",
-                        "trim": false
+                        "trim": false,
+                        "min": 4,
+                        "max": 15
                     },
                     {
                         "type": "{{int-32}}",
@@ -65,7 +69,8 @@
                             {
                                 "type": "{{int-64}}",
                                 "name": "experience",
-                                "min": 0
+                                "min": 0,
+                                "max": 99999
                             }
                         ]
                     },
@@ -76,7 +81,8 @@
                             {
                                 "type": "{{int-64}}",
                                 "name": "coin",
-                                "min": 0
+                                "min": 0,
+                                "max": 99999
                             }
                         ]
                     },
@@ -87,7 +93,8 @@
                             {
                                 "type": "{{int-64}}",
                                 "name": "goldenBall",
-                                "min": 0
+                                "min": 0,
+                                "max": 99999
                             }
                         ]
                     },
@@ -98,7 +105,105 @@
                             {
                                 "type": "{{int-64}}",
                                 "name": "crowd",
-                                "min": 0
+                                "min": 0,
+                                "max": 99999
+                            }
+                        ]
+                    },
+                    {
+                        "type": "{{object}}",
+                        "name": "headquarter",
+                        "fields": [
+                            {
+                                "type": "{{object}}",
+                                "name": "_id",
+                                "fields": [
+                                    {
+                                        "type": "Headquarter",
+                                        "name": "category"
+                                    },
+                                    {
+                                        "type": "{{int-32}}",
+                                        "name": "level",
+                                        "value": 1
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "{{int-64}}",
+                                "name": "buildTime",
+                                "value": 0
+                            },
+                            {
+                                "type": "{{int-64}}",
+                                "name": "requiredLevel",
+                                "value": 1
+                            },
+                            {
+                                "type": "{{object}}",
+                                "name": "cost",
+                                "fields": [
+                                    {
+                                        "type": "{{int-64}}",
+                                        "name": "coin",
+                                        "value": 3400
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "{{date-iso}}",
+                                "name": "createdAt"
+                            },
+                            {
+                                "type": "1/1",
+                                "name": "tileId"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "{{object}}",
+                        "name": "template",
+                        "fields": [
+                            {
+                                "type": "1",
+                                "name": "_id"
+                            },
+                            {
+                                "type": "default",
+                                "name": "name"
+                            },
+                            {
+                                "type": "{{object}}",
+                                "name": "upgrades",
+                                "repeat": 30,
+                                "fields": [
+                                    {
+                                        "type": "{{inc}}",
+                                        "name": "level"
+                                    },
+                                    {
+                                        "type": "{{float-64}}",
+                                        "name": "conversion_ratio",
+                                        "value": 20.00
+                                    },
+                                    {
+                                        "type": "{{object}}",
+                                        "name": "xp_tournament",
+                                        "fields": [
+                                            {
+                                                "type": "{{int-64}}",
+                                                "name": "experience",
+                                                "min": 20,
+                                                "max": 260
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "{{boolean}}",
+                                        "name": "settled",
+                                        "value": false
+                                    }
+                                ]
                             }
                         ]
                     }

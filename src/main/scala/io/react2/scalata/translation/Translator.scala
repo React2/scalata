@@ -1,6 +1,5 @@
 package io.react2.scalata.translation
 
-import io.react2.scalata.exceptions._
 import io.react2.scalata.exporters._
 import io.react2.scalata.generators._
 import io.react2.scalata.parsers._
@@ -32,25 +31,52 @@ class Translator(val json: JValue) {
               new ObjFieldGen(root)
             case "{{unicode}}" =>
               val escape: Set[Char] = field("escape").toSet[JValue].map(_.toStr.head)
-              new UnicodeGen(4, 15,escape)
+              new UnicodeGen(4, 15, escape)
             case "{{alphabetic}}" =>
-              new AlphabeticGen(0, 10)
+              val min = field.getOrElse[Int]("min", 0)
+              val max = field.getOrElse[Int]("max", 10)
+              new AlphabeticGen(min, max)
             case "{{int-32}}" =>
               val min = field.getOrElse[Int]("min", Int.MinValue)
               val max = field.getOrElse[Int]("max", Int.MaxValue)
-              new IntGen(min, max)
+              field.maybe[Int]("value") match {
+                case Some(value) => Gen(IntField(value))
+                case None => new IntGen(min, max)
+              }
             case "{{int-64}}" =>
               val min = field.getOrElse[Long]("min", Long.MinValue)
               val max = field.getOrElse[Long]("max", Long.MaxValue)
-              new LongGen(min, max)
-            case "{{float-32}}" => ???
-            case "{{float-64}}" => ???
-            case "{{boolean}}" => Gen.booleans
-            case "{{null}}" => Gen(null)
-            case "{{date}}" => new RandomDateGen(1900, 2015)
-            case "{{date-iso}}" => new ISODateGen(1900, 2015)
-            case key@placeholder => Gen.placeholder(key)
-            case other => throw new InvalidGenType(other)
+              field.maybe[Long]("value") match {
+                case Some(value) =>
+                  println("Aqui " + value)
+                  Gen(LongField(value))
+                case None => new LongGen(min, max)
+              }
+            case "{{float-32}}" =>
+              val min = field.getOrElse[Long]("min", Long.MinValue)
+              val max = field.getOrElse[Long]("max", Long.MaxValue)
+              new FloatGen(min, max)
+            case "{{float-64}}" =>
+              val min = field.getOrElse[Long]("min", Long.MinValue)
+              val max = field.getOrElse[Long]("max", Long.MaxValue)
+              field.maybe[Double]("value") match {
+                case Some(value) => Gen(DoubleField(value))
+                case None => new DoubleGen(min, max)
+              }
+            case "{{boolean}}" =>
+              Gen.booleans
+            case "{{date}}" =>
+              new RandomDateGen(2000, 2015)
+            case "{{date-iso}}" =>
+              new ISODateGen(2000, 2015)
+            case "{{inc}}" =>
+              new IncrementalGen(1, 30)
+            case "{{null}}" =>
+              Gen(null)
+            case key@placeholder() =>
+              Gen.placeholder(key)
+            case other =>
+              Gen(other)
           }
           FieldGen(name, generator)
         }
@@ -78,6 +104,7 @@ class Translator(val json: JValue) {
 
   private object placeholder {
     val pattern = """^<(.*)>$""".r
+
     def unapply(s: String): Boolean = s match {
       case pattern(key) => true
       case _ => false

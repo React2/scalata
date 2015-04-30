@@ -8,7 +8,7 @@ import java.util.TimeZone
  */
 object Format {
 
-  final val ISO_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz") {
+  final val ISO_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ") {
     this.setTimeZone(TimeZone.getTimeZone("UTC"))
   }
 

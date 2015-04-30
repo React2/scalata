@@ -41,7 +41,15 @@ object Main extends App {
 
   val json = scala.io.Source.fromFile(file).mkString
 
+  val start = System.currentTimeMillis()
+
   // Run the program
   generateData(json)
+
+  val end = (System.currentTimeMillis() - start) / 1000
+
+  println("\n=====================")
+  println(s"Done in $end seconds")
+
 
 }

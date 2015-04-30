@@ -41,6 +41,6 @@ class RandomDateGen(lo: Int, hi: Int) extends DateGen {
 }
 
 object DateGen {
-  def default = new RandomDateGen(1900, 2015)
+  def default = new RandomDateGen(2000, 2015)
 }
 

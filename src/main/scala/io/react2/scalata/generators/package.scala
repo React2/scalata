@@ -20,6 +20,8 @@ package object generators {
   implicit def intFieldGen(gen: Generator[Int]) = for(i <- gen) yield IntField(i)
   implicit def longFieldGen(gen: Generator[Long]) = for(i <- gen) yield LongField(i)
   implicit def boolFieldGen(gen: Generator[Boolean]) = for(i <- gen) yield BooleanField(i)
+  implicit def floatFieldGen(gen: Generator[Float]) = for(i <- gen) yield FloatField(i)
+  implicit def doubleFieldGen(gen: Generator[Double]) = for(i <- gen) yield DoubleField(i)
 
 
 }

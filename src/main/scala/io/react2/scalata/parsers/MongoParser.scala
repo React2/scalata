@@ -1,37 +1,40 @@
 package io.react2.scalata.parsers
 
-import io.react2.scalata.translation._
+import com.mongodb.BasicDBObject
 import io.react2.scalata.plugins.Plugin
-import io.react2.scalata.utils.Format
+import io.react2.scalata.translation._
+import org.bson._
+import org.bson.types.ObjectId
+
+import scala.collection.JavaConverters._
 
 /**
  * @author dbalduini
  */
 class MongoParser(val args: Plugin.Args) extends Parser {
 
-  private val sdf = Format.ISO_DATE_FORMAT
+  override def parse(root: Field): Any = toBSON(root)
 
-
-
-  override def parse(a: Field): String = a match {
-    case SeqField(elems) => "[" + (elems map parse mkString ", ") + "]"
+  def toBSON(f: Field): Any = f match {
     case ObjField(bindings) =>
-      val assocs = bindings map {
-        case (key, value) => "\"" + key + "\": " + parse(value)
+      val doc = new BasicDBObject()
+      bindings foreach {
+        case (key, value) => doc.append(key, toBSON(value))
       }
-      "{" + (assocs mkString ", ") + "}"
-    case StringField(v) => "\"" + v + "\""
-    case LongField(v) => s"NumberLong($v)"
-    case IntField(v) => s"NumberInt($v)"
-    case BooleanField(v) => v.toString
-    case FloatField(v) => v.toString
-    case DoubleField(v) => v.toString
-    case DateField(v) =>
-      val date = "\"" + sdf.format(v) + "\""
-      s"ISODate($date)"
-    case PlaceHolder("<_id>") => "ObjectId()"
-    case NullField => "null"
-    case _ => "<ERROR>"
+      doc
+    case SeqField(elems) =>
+      val arr = elems map toBSON
+      arr.asJava
+    case StringField(v) => v
+    case IntField(v) => v
+    case LongField(v) => v
+    case BooleanField(v) => v
+    case FloatField(v) => v
+    case DoubleField(v) => v
+    case DateField(v) => v
+    case PlaceHolder("<_id>") => ObjectId.get
+    case NullField => new BsonNull
+    case _ => throw new IllegalArgumentException
   }
 
 }
