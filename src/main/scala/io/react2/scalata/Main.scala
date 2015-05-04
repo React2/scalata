@@ -35,7 +35,7 @@ object Main extends App {
   val options = Args.options(this.args)
 
   val config = options.get('config) orElse Some("data/template.json") map(_.toString)
-
+  println("Set Config = " + config)
   val file = config.map(x => new java.io.File(x)).get
 
   val json = scala.io.Source.fromFile(file).mkString

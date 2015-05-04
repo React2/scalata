@@ -1,9 +1,10 @@
 package io.react2.scalata.parsers
 
+import java.util
+
 import com.mongodb.BasicDBObject
 import io.react2.scalata.plugins.Plugin
 import io.react2.scalata.translation._
-import org.bson._
 import org.bson.types.ObjectId
 
 import scala.collection.JavaConverters._
@@ -33,7 +34,8 @@ class MongoParser(val args: Plugin.Args) extends Parser {
     case DoubleField(v) => v
     case DateField(v) => v
     case PlaceHolder("<_id>") => ObjectId.get
-    case NullField => new BsonNull
+    case PlaceHolder("<_empty-array>") => new util.ArrayList[Nothing]()
+    case NullField => null
     case _ => throw new IllegalArgumentException
   }
 

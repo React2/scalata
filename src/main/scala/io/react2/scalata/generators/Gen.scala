@@ -9,21 +9,29 @@ import scala.annotation.tailrec
  */
 object Gen {
 
+  import java.util.{Random => JRandom}
+
+
   def apply[T](x: T): Generator[T] = new Generator[T] {
     def one = x
   }
 
   val integers = new Generator[Int] {
-    val rand = new java.util.Random
+    val rand = new JRandom
     def one = rand.nextInt()
   }
 
   val longs = new Generator[Long] {
-    val rand = new java.util.Random
+    val rand = new JRandom
     def one = rand.nextLong
   }
 
   val booleans: Generator[Boolean] = for (x <- integers) yield x > 0
+
+  val uuidGen: Generator[String] = new Generator[String] {
+    import java.util.UUID
+    def one = UUID.randomUUID.toString
+  }
 
   /**
    * Choose one value in between the given range.

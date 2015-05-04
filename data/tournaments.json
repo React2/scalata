@@ -1,0 +1,138 @@
+{
+    "parser": {
+        "name": "io.react2.scalata.parsers.MongoParser"
+    },
+    "exporter": {
+        "name": "io.react2.scalata.exporters.MongoExporter",
+        "verbose": false,
+        "database": "futiba",
+        "collection": "tournaments"
+    },
+    "data_structure": {
+        "repeat": 100000,
+        "fields": [
+            {
+                "type": "{{uuid}}",
+                "name": "_id"
+            },
+            {
+                "type": "f",
+                "name": "badge"
+            },
+            {
+                "type": "F10",
+                "name": "name"
+            },
+            {
+                "type": "<_empty-array>",
+                "name": "description"
+            },
+            {
+                "type": "{{int-64}}",
+                "name": "initialBudget",
+                "min": 50,
+                "max": 200
+            },
+            {
+                "type": "{{int-32}}",
+                "name": "memberCapacity",
+                "min": 10,
+                "max": 100
+            },
+            {
+                "type": "<_empty-array>",
+                "name": "usersIn"
+            },
+            {
+                "type": "420",
+                "name": "federationId"
+            },
+            {
+                "type": "{{boolean}}",
+                "name": "isTutorial"
+            },
+            {
+                "type": "WINNER_TAKES_ALL",
+                "name": "typeTournament"
+            },
+            {
+                "type": "{{date-iso}}",
+                "name": "startDate"
+            },
+            {
+                "type": "{{date-iso}}",
+                "name": "startLobbyDate"
+            },
+            {
+                "type": "{{date-iso}}",
+                "name": "endLobbyDate"
+            },
+            {
+                "type": "{{date-iso}}",
+                "name": "estimatedDateClosing"
+            },
+            {
+                "type": "NORMAL",
+                "name": "draft"
+            },
+            {
+                "type": "{{int-32}}",
+                "name": "minLevel",
+                "value": 1
+            },
+            {
+                "type": "{{int-32}}",
+                "name": "maxLevel",
+                "value": 50
+            },
+            {
+                "type": "<_empty-array>",
+                "name": "games"
+            },
+            {
+                "type": "{{object}}",
+                "name": "cost",
+                "fields": [
+                    {
+                        "type": "{{int-64}}",
+                        "name": "coin",
+                        "min": 0,
+                        "max": 5000
+                    }
+                ]
+            },
+            {
+                "type": "{{object}}",
+                "name": "experience",
+                "fields": [
+                    {
+                        "type": "{{int-64}}",
+                        "name": "experience",
+                        "min": 0,
+                        "max": 100
+                    }
+                ]
+            },
+            {
+                "type": "{{object}}",
+                "name": "guaranteed",
+                "fields": [
+                    {
+                        "type": "{{int-64}}",
+                        "name": "coin",
+                        "min": 1,
+                        "max": 100
+                    }
+                ]
+            },
+            {
+                "type": "{{boolean}}",
+                "name": "split"
+            },
+            {
+                "type": "{{date-iso}}",
+                "name": "closingDate"
+            }
+        ]
+    }
+}

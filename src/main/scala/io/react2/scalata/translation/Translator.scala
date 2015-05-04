@@ -47,6 +47,8 @@ class Translator(val json: JValue) {
               val min = field.getOrElse[Int]("min", 0)
               val max = field.getOrElse[Int]("max", 10)
               new AlphabeticGen(min, max)
+            case "{{uuid}}" =>
+              for (uuid <- Gen.uuidGen) yield StringField(uuid)
             case "{{int-32}}" =>
               val min = field.getOrElse[Int]("min", Int.MinValue)
               val max = field.getOrElse[Int]("max", Int.MaxValue)
